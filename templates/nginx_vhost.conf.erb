@@ -1,0 +1,27 @@
+server {
+    listen      80;
+    server_name  <%= sitedomain %>;
+    access_log /var/log/nginx/<%= sitedomain %>.access.log;
+
+    location / {
+        root /var/www/<%= rootdir %>;
+        index index.php index.html index.htm default.php default.htm default.html;
+    }
+
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.svn|\.project|LICENSE|README.md)
+    {
+       return 404;
+    }
+  
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+       expires      30d;
+       access_log off;
+    }
+
+    location ~ .*\.(js|css)?$
+    {
+       expires      12h;
+       access_log off;
+    }
+}
